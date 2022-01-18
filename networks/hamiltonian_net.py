@@ -188,7 +188,7 @@ class HamiltonianEGNNNet(nn.Module):
                                  kernel_size=kernel_sizes[0],
                                  padding=conv_paddings[0],
                                  stride=strides[0])
-        self.hidden_layers = EGNN_Network(dim=16, depth=2)
+        self.hidden_layers = EGNN_Network(dim=16, depth=1)
         self.out_conv = nn.Conv2d(in_channels=n_filters[0],
                                   out_channels=1,
                                   kernel_size=2,
