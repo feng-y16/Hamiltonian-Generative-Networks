@@ -5,6 +5,7 @@ device: 'cuda:0'  # Will use this device if available, otherwise wil use cpu
 
 # Define networks architectures
 networks:
+  use_EGNN: False
   variational: True
   dtype : "float"
   encoder:

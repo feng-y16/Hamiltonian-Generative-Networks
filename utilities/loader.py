@@ -10,7 +10,7 @@ from environments.environment_factory import EnvFactory
 from hamiltonian_generative_network import HGN
 from networks.decoder_net import DecoderNet
 from networks.encoder_net import EncoderNet
-from networks.hamiltonian_net import HamiltonianNet
+from networks.hamiltonian_net import HamiltonianNet, HamiltonianEGNNNet
 from networks.transformer_net import TransformerNet
 from utilities.integrator import Integrator
 
@@ -63,8 +63,14 @@ def load_hgn(params, device, dtype):
         in_channels=params["networks"]["encoder"]["out_channels"],
         **params["networks"]["transformer"],
         dtype=dtype).to(device)
-    hnn = HamiltonianNet(**params["networks"]["hamiltonian"],
-                         dtype=dtype).to(device)
+    if params["networks"]["use_EGNN"]:
+        print("Use EGNN")
+        hnn = HamiltonianEGNNNet(**params["networks"]["hamiltonian"],
+                                 dtype=dtype).to(device)
+    else:
+        print("Use CNN")
+        hnn = HamiltonianNet(**params["networks"]["hamiltonian"],
+                             dtype=dtype).to(device)
     decoder = DecoderNet(
         in_channels=params["networks"]["transformer"]["out_channels"],
         out_channels=params["dataset"]["rollout"]["n_channels"],
